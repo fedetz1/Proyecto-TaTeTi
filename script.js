@@ -1,6 +1,6 @@
 const tablero = document.querySelector("#tablero");
 const turno = document.querySelector("#turno");
-const arrJuego = [
+let arrJuego = [
   ["", "", ""],
   ["", "", ""],
   ["", "", ""],
@@ -9,19 +9,25 @@ let tableroLleno = false;
 let turnoDe = 0; //1 jugador, 0 cpu
 comienzoPartida();
 function actualizarTablero() {
-  const html = arrJuego.map((fila) => {
-    const rows = fila.map((elemento) => {
-      return `<button class="casilla">${elemento}</button>`;
+    const html = arrJuego.map((fila) => {
+        const rows = fila.map((elemento) => {
+            return `<button class="casilla">${elemento}</button>`;
+        });
+        return `<div class="fila">${rows.join("")}</div>`;
     });
-    return `<div class="fila">${rows.join("")}</div>`;
-  });
-  return (tablero.innerHTML = html.join(""));
+    return (tablero.innerHTML = html.join(""));
 }
 
 function actualizarJugador() {
   turno.innerHTML = `${turnoDe == 0 ? "Turno de la PC" : "Turno del jugador"}`;
 }
 function comienzoPartida() {
+    tableroLleno = false;
+    arrJuego = [
+        ["", "", ""],
+        ["", "", ""],
+        ["", "", ""],
+      ];
   actualizarTablero();
   turnoDe = Math.floor(Math.random() * 2) == 0 ? 0 : 1;
   actualizarJugador();
@@ -129,3 +135,5 @@ function terminarPartida() {
   }`;
   tableroLleno = true;
 }
+
+
