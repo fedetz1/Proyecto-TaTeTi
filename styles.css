@@ -1,0 +1,31 @@
+
+  
+  .fila {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .casilla {
+    width: 80px;
+    height: 80px;
+    font-size: 24px;
+    border: black 1px solid;
+    background-color: #eee;
+    cursor: pointer;
+  }
+  
+  .casilla:hover {
+    background-color: #ccc;
+  }
+  
+  .casilla:disabled {
+    cursor: not-allowed;
+  }
+
+  #turno{
+    display: flex;
+    justify-content: center;
+  }
+
+  
+  
