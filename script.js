@@ -137,3 +137,17 @@ function terminarPartida() {
 }
 
 
+
+
+    const texto=document.querySelector(".botonsecreto")
+    let i=0
+    texto.addEventListener("click",e=>{
+        if(i==5){
+            alert("te amo")
+        }
+        i++
+    })
+    
+
+
+
