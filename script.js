@@ -76,35 +76,46 @@ function playerPlays() {
 }
 
 function cpuPlays() {
-  let randomUno = Math.floor(Math.random() * 3);
-  let randomDos = Math.floor(Math.random() * 3);
-  if (arrayEstaLleno(arrJuego)||tableroLleno==true) {
-        tableroLleno=true  
-  };
-  if (!tableroLleno) {
+    if (arrayEstaLleno(arrJuego) || tableroLleno) {
+      return;
+    }
+  
     setTimeout(() => {
-      while (arrJuego[randomUno][randomDos] != "") {
-        randomUno = Math.floor(Math.random() * 3);
-        randomDos = Math.floor(Math.random() * 3);
+      // Verificar si hay una jugada ganadora para el CPU
+      const jugadaGanadora = buscarJugadaGanadora("X");
+      if (jugadaGanadora) {
+        arrJuego[jugadaGanadora[0]][jugadaGanadora[1]] = "X";
+      } else {
+        // Verificar si hay una jugada del jugador para bloquearla
+        const jugadaBloqueo = buscarJugadaGanadora("O");
+        if (jugadaBloqueo) {
+          arrJuego[jugadaBloqueo[0]][jugadaBloqueo[1]] = "X";
+        } else {
+          // Realizar una jugada aleatoria
+          let randomUno = Math.floor(Math.random() * 3);
+          let randomDos = Math.floor(Math.random() * 3);
+          while (arrJuego[randomUno][randomDos] !== "") {
+            randomUno = Math.floor(Math.random() * 3);
+            randomDos = Math.floor(Math.random() * 3);
+          }
+          arrJuego[randomUno][randomDos] = "X";
+        }
       }
-
-      arrJuego[randomUno][randomDos] = "X";
+  
       turnoDe = 1;
       actualizarTablero();
       actualizarJugador();
-      
-      if (verificarGanador().gano == true) {
-          terminarPartida();
-        } else if (tableroLleno) {
-            terminarPartida();
-        }
-        playerPlays();
-
+  
+      if (verificarGanador().gano) {
+        terminarPartida();
+      } else if (arrayEstaLleno(arrJuego)) {
+        terminarPartida();
+      }
+  
+      playerPlays();
     }, 1000);
-  } else {
-    terminarPartida()
   }
-}
+  
 
 function arrayEstaLleno(arr) {
   return arr.every((fila) => fila.every((elemento) => elemento !== ""));
@@ -148,3 +159,101 @@ function terminarPartida() {
 
 
 
+function buscarJugadaGanadora(jugador) {
+    // Verificar filas
+    for (let i = 0; i < 3; i++) {
+      if (
+        arrJuego[i][0] === jugador &&
+        arrJuego[i][1] === jugador &&
+        arrJuego[i][2] === ""
+      ) {
+        return [i, 2];
+      }
+      if (
+        arrJuego[i][0] === jugador &&
+        arrJuego[i][1] === "" &&
+        arrJuego[i][2] === jugador
+      ) {
+        return [i, 1];
+      }
+      if (
+        arrJuego[i][0] === "" &&
+        arrJuego[i][1] === jugador &&
+        arrJuego[i][2] === jugador
+      ) {
+        return [i, 0];
+      }
+    }
+  
+    // Verificar columnas
+    for (let j = 0; j < 3; j++) {
+      if (
+        arrJuego[0][j] === jugador &&
+        arrJuego[1][j] === jugador &&
+        arrJuego[2][j] === ""
+      ) {
+        return [2, j];
+      }
+      if (
+        arrJuego[0][j] === jugador &&
+        arrJuego[1][j] === "" &&
+        arrJuego[2][j] === jugador
+      ) {
+        return [1, j];
+      }
+      if (
+        arrJuego[0][j] === "" &&
+        arrJuego[1][j] === jugador &&
+        arrJuego[2][j] === jugador
+      ) {
+        return [0, j];
+      }
+    }
+  
+    // Verificar diagonales
+    if (
+      arrJuego[0][0] === jugador &&
+      arrJuego[1][1] === jugador &&
+      arrJuego[2][2] === ""
+    ) {
+      return [2, 2];
+    }
+    if (
+      arrJuego[0][0] === jugador &&
+      arrJuego[1][1] === "" &&
+      arrJuego[2][2] === jugador
+    ) {
+      return [1, 1];
+    }
+    if (
+      arrJuego[0][0] === "" &&
+      arrJuego[1][1] === jugador &&
+      arrJuego[2][2] === jugador
+    ) {
+      return [0, 0];
+    }
+    if (
+      arrJuego[0][2] === jugador &&
+      arrJuego[1][1] === jugador &&
+      arrJuego[2][0] === ""
+    ) {
+      return [2, 0];
+    }
+    if (
+      arrJuego[0][2] === jugador &&
+      arrJuego[1][1] === "" &&
+      arrJuego[2][0] === jugador
+    ) {
+      return [1, 1];
+    }
+    if (
+      arrJuego[0][2] === "" &&
+      arrJuego[1][1] === jugador &&
+      arrJuego[2][0] === jugador
+    ) {
+      return [0, 2];
+    }
+  
+    return null;
+  }
+  
