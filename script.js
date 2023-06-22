@@ -76,10 +76,10 @@ function playerPlays() {
 }
 
 function cpuPlays() {
-    if (arrayEstaLleno(arrJuego) || tableroLleno) {
-      return;
-    }
-  
+    if (arrayEstaLleno(arrJuego)||tableroLleno==true) {
+        tableroLleno=true  
+  };
+  if (!tableroLleno) {
     setTimeout(() => {
       // Verificar si hay una jugada ganadora para el CPU
       const jugadaGanadora = buscarJugadaGanadora("X");
@@ -114,6 +114,10 @@ function cpuPlays() {
   
       playerPlays();
     }, 1000);
+}
+else{
+    terminarPartida()
+}
   }
   
 
