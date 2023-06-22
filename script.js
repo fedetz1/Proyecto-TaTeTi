@@ -40,11 +40,8 @@ function comienzoPartida() {
 }
 
 function playerPlays() {
-  if (tableroLleno) {
-    return;
-  }
-  tableroLleno = arrayEstaLleno(arrJuego);
-  if (!tableroLleno) {
+      tableroLleno = arrayEstaLleno(arrJuego);
+      if (!tableroLleno) {
     const casillas = document.querySelectorAll(".casilla");
     function handleClick(iFila, iCasilla) {
       return function () {
@@ -56,7 +53,10 @@ function playerPlays() {
           actualizarJugador();
           if (verificarGanador().gano == true) {
             terminarPartida();
+          } else if (tableroLleno) {
+            terminarPartida();
           }
+      
           cpuPlays();
         }
       };
@@ -68,12 +68,12 @@ function playerPlays() {
       elementoHTML.addEventListener("click", handleClick(iFila, iCasilla));
     });
   }
+  else{
+    terminarPartida()
+  }
 }
 
 function cpuPlays() {
-  if (tableroLleno) {
-    return;
-  }
   let randomUno = Math.floor(Math.random() * 3);
   let randomDos = Math.floor(Math.random() * 3);
   tableroLleno = arrayEstaLleno(arrJuego);
@@ -91,12 +91,14 @@ function cpuPlays() {
 
       if (verificarGanador().gano == true) {
         terminarPartida();
+      } else if (tableroLleno) {
+        terminarPartida();
       }
 
       playerPlays();
     }, 2000);
   } else {
-    turno.innerHTML = "Partida Terminada";
+    terminarPartida()
   }
 }
 
@@ -138,15 +140,6 @@ function terminarPartida() {
 
 
 
-
-    const texto=document.querySelector(".botonsecreto")
-    let i=0
-    texto.addEventListener("click",e=>{
-        if(i==5){
-            alert("te amo")
-        }
-        i++
-    })
     
 
 
