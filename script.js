@@ -40,7 +40,9 @@ function comienzoPartida() {
 }
 
 function playerPlays() {
-      tableroLleno = arrayEstaLleno(arrJuego);
+    if (arrayEstaLleno(arrJuego)||tableroLleno==true) {
+        tableroLleno=true  
+  };
       if (!tableroLleno) {
     const casillas = document.querySelectorAll(".casilla");
     function handleClick(iFila, iCasilla) {
@@ -76,7 +78,9 @@ function playerPlays() {
 function cpuPlays() {
   let randomUno = Math.floor(Math.random() * 3);
   let randomDos = Math.floor(Math.random() * 3);
-  tableroLleno = arrayEstaLleno(arrJuego);
+  if (arrayEstaLleno(arrJuego)||tableroLleno==true) {
+        tableroLleno=true  
+  };
   if (!tableroLleno) {
     setTimeout(() => {
       while (arrJuego[randomUno][randomDos] != "") {
@@ -88,15 +92,15 @@ function cpuPlays() {
       turnoDe = 1;
       actualizarTablero();
       actualizarJugador();
-
+      
       if (verificarGanador().gano == true) {
-        terminarPartida();
-      } else if (tableroLleno) {
-        terminarPartida();
-      }
+          terminarPartida();
+        } else if (tableroLleno) {
+            terminarPartida();
+        }
+        playerPlays();
 
-      playerPlays();
-    }, 2000);
+    }, 1000);
   } else {
     terminarPartida()
   }
