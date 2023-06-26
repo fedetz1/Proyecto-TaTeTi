@@ -158,11 +158,6 @@ function terminarPartida() {
 }
 
 
-
-    
-
-
-
 function buscarJugadaGanadora(jugador) {
     // Verificar filas
     for (let i = 0; i < 3; i++) {
